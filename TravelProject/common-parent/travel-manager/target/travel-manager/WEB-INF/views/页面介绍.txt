@@ -1,0 +1,49 @@
+关于我们 -- about.html
+申请成为向导宣传页面 apply.html
+申请成为向导编辑页   apply2.html
+最新伴游 banyou.html
+城市详情(厦门) city_detail.html
+填写预约申请 daoyou_book.html
+导游详情 daoyou_detail.html 
+导游订单 daoyou_order.html
+导游主页展示全部导游 daoyou.html
+忘记密码 forget.html
+旅游攻略详情 gonglue_detail.html
+旅游攻略搜索 gonglue_search.html
+旅游攻略列表 gonglue.html
+预定流程 帮助中心 help.html
+景点详情 jingdian_detail.html
+景点搜索 jingdian_search.html
+旅游景点大全 jingdian.html
+个人信息更换头像 member_avatar.html
+基本资料 member_info.html
+结伴同游 member_jieban.html
+个人订单详情(等待导游/伴游接受) member_order_detail.html
+我的订单 member_order.html
+修改密码 member_pwd.html
+结伴同游 member_tongyou.html
+编辑同游 member_travel_edit.html
+我的钱包 member_withdraw.html
+城市详情(北京) search_daoyou.html
+搜索同游 search_tongyou.html
+添加同游 tongyou_add.html
+同游详情 tongyou_detail.html
+同游订单 tongyou_order.html
+同游列表 tongyou.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

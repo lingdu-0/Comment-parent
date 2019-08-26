@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wb.travel.dao.TogetherTravelMapper" >
+  <resultMap id="BaseResultMap" type="togetherTravel" >
+    <id column="together_travel_id" property="togetherTravelId" jdbcType="INTEGER" />
+    <result column="together_travel_start_address" property="togetherTravelStartAddress" jdbcType="VARCHAR" />
+    <result column="together_travel_end_address" property="togetherTravelEndAddress" jdbcType="VARCHAR" />
+    <result column="together_travel_start_date" property="togetherTravelStartDate" jdbcType="DATE" />
+    <result column="together_travel_end_date" property="togetherTravelEndDate" jdbcType="DATE" />
+    <result column="together_travel_contact _type" property="togetherTravelContactType" jdbcType="INTEGER" />
+    <result column="together_travel_contact _detail" property="togetherTravelContactDetail" jdbcType="VARCHAR" />
+    <result column="together_travel_number" property="togetherTravelNumber" jdbcType="INTEGER" />
+    <result column="together_travel_status" property="togetherTravelStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="togetherTravelWithBLOBs" extends="BaseResultMap" >
+    <result column="together_travel_title" property="togetherTravelTitle" jdbcType="LONGVARCHAR" />
+    <result column="together_travel_detail" property="togetherTravelDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    together_travel_id, together_travel_start_address, together_travel_end_address, together_travel_start_date, 
+    together_travel_end_date, "together_travel_contact _type", "together_travel_contact _detail", 
+    together_travel_number, together_travel_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    together_travel_title, together_travel_detail
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="togetherTravelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_together_travel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="togetherTravelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_together_travel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_together_travel
+    where together_travel_id = #{togetherTravelId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_together_travel
+    where together_travel_id = #{togetherTravelId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="togetherTravelExample" >
+    delete from t_together_travel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="togetherTravelWithBLOBs" >
+    insert into t_together_travel (together_travel_id, together_travel_start_address, 
+      together_travel_end_address, together_travel_start_date, 
+      together_travel_end_date, "together_travel_contact _type", 
+      "together_travel_contact _detail", together_travel_number, 
+      together_travel_status, together_travel_title, 
+      together_travel_detail)
+    values (#{togetherTravelId,jdbcType=INTEGER}, #{togetherTravelStartAddress,jdbcType=VARCHAR}, 
+      #{togetherTravelEndAddress,jdbcType=VARCHAR}, #{togetherTravelStartDate,jdbcType=DATE}, 
+      #{togetherTravelEndDate,jdbcType=DATE}, #{togetherTravelContactType,jdbcType=INTEGER}, 
+      #{togetherTravelContactDetail,jdbcType=VARCHAR}, #{togetherTravelNumber,jdbcType=INTEGER}, 
+      #{togetherTravelStatus,jdbcType=INTEGER}, #{togetherTravelTitle,jdbcType=LONGVARCHAR}, 
+      #{togetherTravelDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="togetherTravelWithBLOBs" >
+    insert into t_together_travel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="togetherTravelId != null" >
+        together_travel_id,
+      </if>
+      <if test="togetherTravelStartAddress != null" >
+        together_travel_start_address,
+      </if>
+      <if test="togetherTravelEndAddress != null" >
+        together_travel_end_address,
+      </if>
+      <if test="togetherTravelStartDate != null" >
+        together_travel_start_date,
+      </if>
+      <if test="togetherTravelEndDate != null" >
+        together_travel_end_date,
+      </if>
+      <if test="togetherTravelContactType != null" >
+        "together_travel_contact _type",
+      </if>
+      <if test="togetherTravelContactDetail != null" >
+        "together_travel_contact _detail",
+      </if>
+      <if test="togetherTravelNumber != null" >
+        together_travel_number,
+      </if>
+      <if test="togetherTravelStatus != null" >
+        together_travel_status,
+      </if>
+      <if test="togetherTravelTitle != null" >
+        together_travel_title,
+      </if>
+      <if test="togetherTravelDetail != null" >
+        together_travel_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="togetherTravelId != null" >
+        #{togetherTravelId,jdbcType=INTEGER},
+      </if>
+      <if test="togetherTravelStartAddress != null" >
+        #{togetherTravelStartAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="togetherTravelEndAddress != null" >
+        #{togetherTravelEndAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="togetherTravelStartDate != null" >
+        #{togetherTravelStartDate,jdbcType=DATE},
+      </if>
+      <if test="togetherTravelEndDate != null" >
+        #{togetherTravelEndDate,jdbcType=DATE},
+      </if>
+      <if test="togetherTravelContactType != null" >
+        #{togetherTravelContactType,jdbcType=INTEGER},
+      </if>
+      <if test="togetherTravelContactDetail != null" >
+        #{togetherTravelContactDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="togetherTravelNumber != null" >
+        #{togetherTravelNumber,jdbcType=INTEGER},
+      </if>
+      <if test="togetherTravelStatus != null" >
+        #{togetherTravelStatus,jdbcType=INTEGER},
+      </if>
+      <if test="togetherTravelTitle != null" >
+        #{togetherTravelTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="togetherTravelDetail != null" >
+        #{togetherTravelDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="togetherTravelExample" resultType="java.lang.Integer" >
+    select count(*) from t_together_travel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_together_travel
+    <set >
+      <if test="record.togetherTravelId != null" >
+        together_travel_id = #{record.togetherTravelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.togetherTravelStartAddress != null" >
+        together_travel_start_address = #{record.togetherTravelStartAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.togetherTravelEndAddress != null" >
+        together_travel_end_address = #{record.togetherTravelEndAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.togetherTravelStartDate != null" >
+        together_travel_start_date = #{record.togetherTravelStartDate,jdbcType=DATE},
+      </if>
+      <if test="record.togetherTravelEndDate != null" >
+        together_travel_end_date = #{record.togetherTravelEndDate,jdbcType=DATE},
+      </if>
+      <if test="record.togetherTravelContactType != null" >
+        "together_travel_contact _type" = #{record.togetherTravelContactType,jdbcType=INTEGER},
+      </if>
+      <if test="record.togetherTravelContactDetail != null" >
+        "together_travel_contact _detail" = #{record.togetherTravelContactDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.togetherTravelNumber != null" >
+        together_travel_number = #{record.togetherTravelNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.togetherTravelStatus != null" >
+        together_travel_status = #{record.togetherTravelStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.togetherTravelTitle != null" >
+        together_travel_title = #{record.togetherTravelTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.togetherTravelDetail != null" >
+        together_travel_detail = #{record.togetherTravelDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_together_travel
+    set together_travel_id = #{record.togetherTravelId,jdbcType=INTEGER},
+      together_travel_start_address = #{record.togetherTravelStartAddress,jdbcType=VARCHAR},
+      together_travel_end_address = #{record.togetherTravelEndAddress,jdbcType=VARCHAR},
+      together_travel_start_date = #{record.togetherTravelStartDate,jdbcType=DATE},
+      together_travel_end_date = #{record.togetherTravelEndDate,jdbcType=DATE},
+      "together_travel_contact _type" = #{record.togetherTravelContactType,jdbcType=INTEGER},
+      "together_travel_contact _detail" = #{record.togetherTravelContactDetail,jdbcType=VARCHAR},
+      together_travel_number = #{record.togetherTravelNumber,jdbcType=INTEGER},
+      together_travel_status = #{record.togetherTravelStatus,jdbcType=INTEGER},
+      together_travel_title = #{record.togetherTravelTitle,jdbcType=LONGVARCHAR},
+      together_travel_detail = #{record.togetherTravelDetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_together_travel
+    set together_travel_id = #{record.togetherTravelId,jdbcType=INTEGER},
+      together_travel_start_address = #{record.togetherTravelStartAddress,jdbcType=VARCHAR},
+      together_travel_end_address = #{record.togetherTravelEndAddress,jdbcType=VARCHAR},
+      together_travel_start_date = #{record.togetherTravelStartDate,jdbcType=DATE},
+      together_travel_end_date = #{record.togetherTravelEndDate,jdbcType=DATE},
+      "together_travel_contact _type" = #{record.togetherTravelContactType,jdbcType=INTEGER},
+      "together_travel_contact _detail" = #{record.togetherTravelContactDetail,jdbcType=VARCHAR},
+      together_travel_number = #{record.togetherTravelNumber,jdbcType=INTEGER},
+      together_travel_status = #{record.togetherTravelStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="togetherTravelWithBLOBs" >
+    update t_together_travel
+    <set >
+      <if test="togetherTravelStartAddress != null" >
+        together_travel_start_address = #{togetherTravelStartAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="togetherTravelEndAddress != null" >
+        together_travel_end_address = #{togetherTravelEndAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="togetherTravelStartDate != null" >
+        together_travel_start_date = #{togetherTravelStartDate,jdbcType=DATE},
+      </if>
+      <if test="togetherTravelEndDate != null" >
+        together_travel_end_date = #{togetherTravelEndDate,jdbcType=DATE},
+      </if>
+      <if test="togetherTravelContactType != null" >
+        "together_travel_contact _type" = #{togetherTravelContactType,jdbcType=INTEGER},
+      </if>
+      <if test="togetherTravelContactDetail != null" >
+        "together_travel_contact _detail" = #{togetherTravelContactDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="togetherTravelNumber != null" >
+        together_travel_number = #{togetherTravelNumber,jdbcType=INTEGER},
+      </if>
+      <if test="togetherTravelStatus != null" >
+        together_travel_status = #{togetherTravelStatus,jdbcType=INTEGER},
+      </if>
+      <if test="togetherTravelTitle != null" >
+        together_travel_title = #{togetherTravelTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="togetherTravelDetail != null" >
+        together_travel_detail = #{togetherTravelDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where together_travel_id = #{togetherTravelId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="togetherTravelWithBLOBs" >
+    update t_together_travel
+    set together_travel_start_address = #{togetherTravelStartAddress,jdbcType=VARCHAR},
+      together_travel_end_address = #{togetherTravelEndAddress,jdbcType=VARCHAR},
+      together_travel_start_date = #{togetherTravelStartDate,jdbcType=DATE},
+      together_travel_end_date = #{togetherTravelEndDate,jdbcType=DATE},
+      "together_travel_contact _type" = #{togetherTravelContactType,jdbcType=INTEGER},
+      "together_travel_contact _detail" = #{togetherTravelContactDetail,jdbcType=VARCHAR},
+      together_travel_number = #{togetherTravelNumber,jdbcType=INTEGER},
+      together_travel_status = #{togetherTravelStatus,jdbcType=INTEGER},
+      together_travel_title = #{togetherTravelTitle,jdbcType=LONGVARCHAR},
+      together_travel_detail = #{togetherTravelDetail,jdbcType=LONGVARCHAR}
+    where together_travel_id = #{togetherTravelId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="togetherTravel" >
+    update t_together_travel
+    set together_travel_start_address = #{togetherTravelStartAddress,jdbcType=VARCHAR},
+      together_travel_end_address = #{togetherTravelEndAddress,jdbcType=VARCHAR},
+      together_travel_start_date = #{togetherTravelStartDate,jdbcType=DATE},
+      together_travel_end_date = #{togetherTravelEndDate,jdbcType=DATE},
+      "together_travel_contact _type" = #{togetherTravelContactType,jdbcType=INTEGER},
+      "together_travel_contact _detail" = #{togetherTravelContactDetail,jdbcType=VARCHAR},
+      together_travel_number = #{togetherTravelNumber,jdbcType=INTEGER},
+      together_travel_status = #{togetherTravelStatus,jdbcType=INTEGER}
+    where together_travel_id = #{togetherTravelId,jdbcType=INTEGER}
+  </update>
+</mapper>

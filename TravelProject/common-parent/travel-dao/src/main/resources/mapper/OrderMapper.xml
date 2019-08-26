@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wb.travel.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="order" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_begin" property="orderBegin" jdbcType="DATE" />
+    <result column="order_end" property="orderEnd" jdbcType="DATE" />
+    <result column="adult_number" property="adultNumber" jdbcType="INTEGER" />
+    <result column="child_number" property="childNumber" jdbcType="INTEGER" />
+    <result column="order_city" property="orderCity" jdbcType="VARCHAR" />
+    <result column="service_type" property="serviceType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, order_begin, order_end, adult_number, child_number, order_city, service_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="orderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="orderExample" >
+    delete from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="order" >
+    insert into t_order (order_id, order_begin, order_end, 
+      adult_number, child_number, order_city, 
+      service_type)
+    values (#{orderId,jdbcType=INTEGER}, #{orderBegin,jdbcType=DATE}, #{orderEnd,jdbcType=DATE}, 
+      #{adultNumber,jdbcType=INTEGER}, #{childNumber,jdbcType=INTEGER}, #{orderCity,jdbcType=VARCHAR}, 
+      #{serviceType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="order" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderBegin != null" >
+        order_begin,
+      </if>
+      <if test="orderEnd != null" >
+        order_end,
+      </if>
+      <if test="adultNumber != null" >
+        adult_number,
+      </if>
+      <if test="childNumber != null" >
+        child_number,
+      </if>
+      <if test="orderCity != null" >
+        order_city,
+      </if>
+      <if test="serviceType != null" >
+        service_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderBegin != null" >
+        #{orderBegin,jdbcType=DATE},
+      </if>
+      <if test="orderEnd != null" >
+        #{orderEnd,jdbcType=DATE},
+      </if>
+      <if test="adultNumber != null" >
+        #{adultNumber,jdbcType=INTEGER},
+      </if>
+      <if test="childNumber != null" >
+        #{childNumber,jdbcType=INTEGER},
+      </if>
+      <if test="orderCity != null" >
+        #{orderCity,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        #{serviceType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="orderExample" resultType="java.lang.Integer" >
+    select count(*) from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderBegin != null" >
+        order_begin = #{record.orderBegin,jdbcType=DATE},
+      </if>
+      <if test="record.orderEnd != null" >
+        order_end = #{record.orderEnd,jdbcType=DATE},
+      </if>
+      <if test="record.adultNumber != null" >
+        adult_number = #{record.adultNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.childNumber != null" >
+        child_number = #{record.childNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderCity != null" >
+        order_city = #{record.orderCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceType != null" >
+        service_type = #{record.serviceType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      order_begin = #{record.orderBegin,jdbcType=DATE},
+      order_end = #{record.orderEnd,jdbcType=DATE},
+      adult_number = #{record.adultNumber,jdbcType=INTEGER},
+      child_number = #{record.childNumber,jdbcType=INTEGER},
+      order_city = #{record.orderCity,jdbcType=VARCHAR},
+      service_type = #{record.serviceType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="order" >
+    update t_order
+    <set >
+      <if test="orderBegin != null" >
+        order_begin = #{orderBegin,jdbcType=DATE},
+      </if>
+      <if test="orderEnd != null" >
+        order_end = #{orderEnd,jdbcType=DATE},
+      </if>
+      <if test="adultNumber != null" >
+        adult_number = #{adultNumber,jdbcType=INTEGER},
+      </if>
+      <if test="childNumber != null" >
+        child_number = #{childNumber,jdbcType=INTEGER},
+      </if>
+      <if test="orderCity != null" >
+        order_city = #{orderCity,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null" >
+        service_type = #{serviceType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="order" >
+    update t_order
+    set order_begin = #{orderBegin,jdbcType=DATE},
+      order_end = #{orderEnd,jdbcType=DATE},
+      adult_number = #{adultNumber,jdbcType=INTEGER},
+      child_number = #{childNumber,jdbcType=INTEGER},
+      order_city = #{orderCity,jdbcType=VARCHAR},
+      service_type = #{serviceType,jdbcType=INTEGER}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

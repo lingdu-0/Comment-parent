@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wb.travel.dao.ScenicSpotMapper" >
+  <resultMap id="BaseResultMap" type="scenicSpot" >
+    <id column="scenic_spot_id" property="scenicSpotId" jdbcType="INTEGER" />
+    <result column="scenic_spot_name" property="scenicSpotName" jdbcType="VARCHAR" />
+    <result column="scenic_spot_grade" property="scenicSpotGrade" jdbcType="INTEGER" />
+    <result column="scenic_spot_address" property="scenicSpotAddress" jdbcType="VARCHAR" />
+    <result column="scenic_spot_tel" property="scenicSpotTel" jdbcType="VARCHAR" />
+    <result column="scenic_spot_date" property="scenicSpotDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="scenicSpotWithBLOBs" extends="BaseResultMap" >
+    <result column="scenic_spot_ticket_info" property="scenicSpotTicketInfo" jdbcType="LONGVARCHAR" />
+    <result column="scenic_spot_info" property="scenicSpotInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    scenic_spot_id, scenic_spot_name, scenic_spot_grade, scenic_spot_address, scenic_spot_tel, 
+    scenic_spot_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    scenic_spot_ticket_info, scenic_spot_info
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="scenicSpotExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="scenicSpotExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_scenic_spot
+    where scenic_spot_id = #{scenicSpotId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_scenic_spot
+    where scenic_spot_id = #{scenicSpotId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="scenicSpotExample" >
+    delete from t_scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="scenicSpotWithBLOBs" >
+    insert into t_scenic_spot (scenic_spot_id, scenic_spot_name, scenic_spot_grade, 
+      scenic_spot_address, scenic_spot_tel, scenic_spot_date, 
+      scenic_spot_ticket_info, scenic_spot_info
+      )
+    values (#{scenicSpotId,jdbcType=INTEGER}, #{scenicSpotName,jdbcType=VARCHAR}, #{scenicSpotGrade,jdbcType=INTEGER}, 
+      #{scenicSpotAddress,jdbcType=VARCHAR}, #{scenicSpotTel,jdbcType=VARCHAR}, #{scenicSpotDate,jdbcType=VARCHAR}, 
+      #{scenicSpotTicketInfo,jdbcType=LONGVARCHAR}, #{scenicSpotInfo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="scenicSpotWithBLOBs" >
+    insert into t_scenic_spot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotId != null" >
+        scenic_spot_id,
+      </if>
+      <if test="scenicSpotName != null" >
+        scenic_spot_name,
+      </if>
+      <if test="scenicSpotGrade != null" >
+        scenic_spot_grade,
+      </if>
+      <if test="scenicSpotAddress != null" >
+        scenic_spot_address,
+      </if>
+      <if test="scenicSpotTel != null" >
+        scenic_spot_tel,
+      </if>
+      <if test="scenicSpotDate != null" >
+        scenic_spot_date,
+      </if>
+      <if test="scenicSpotTicketInfo != null" >
+        scenic_spot_ticket_info,
+      </if>
+      <if test="scenicSpotInfo != null" >
+        scenic_spot_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scenicSpotId != null" >
+        #{scenicSpotId,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotName != null" >
+        #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotGrade != null" >
+        #{scenicSpotGrade,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotAddress != null" >
+        #{scenicSpotAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotTel != null" >
+        #{scenicSpotTel,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotDate != null" >
+        #{scenicSpotDate,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotTicketInfo != null" >
+        #{scenicSpotTicketInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotInfo != null" >
+        #{scenicSpotInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="scenicSpotExample" resultType="java.lang.Integer" >
+    select count(*) from t_scenic_spot
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_scenic_spot
+    <set >
+      <if test="record.scenicSpotId != null" >
+        scenic_spot_id = #{record.scenicSpotId,jdbcType=INTEGER},
+      </if>
+      <if test="record.scenicSpotName != null" >
+        scenic_spot_name = #{record.scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotGrade != null" >
+        scenic_spot_grade = #{record.scenicSpotGrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.scenicSpotAddress != null" >
+        scenic_spot_address = #{record.scenicSpotAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotTel != null" >
+        scenic_spot_tel = #{record.scenicSpotTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotDate != null" >
+        scenic_spot_date = #{record.scenicSpotDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicSpotTicketInfo != null" >
+        scenic_spot_ticket_info = #{record.scenicSpotTicketInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.scenicSpotInfo != null" >
+        scenic_spot_info = #{record.scenicSpotInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_scenic_spot
+    set scenic_spot_id = #{record.scenicSpotId,jdbcType=INTEGER},
+      scenic_spot_name = #{record.scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_grade = #{record.scenicSpotGrade,jdbcType=INTEGER},
+      scenic_spot_address = #{record.scenicSpotAddress,jdbcType=VARCHAR},
+      scenic_spot_tel = #{record.scenicSpotTel,jdbcType=VARCHAR},
+      scenic_spot_date = #{record.scenicSpotDate,jdbcType=VARCHAR},
+      scenic_spot_ticket_info = #{record.scenicSpotTicketInfo,jdbcType=LONGVARCHAR},
+      scenic_spot_info = #{record.scenicSpotInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_scenic_spot
+    set scenic_spot_id = #{record.scenicSpotId,jdbcType=INTEGER},
+      scenic_spot_name = #{record.scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_grade = #{record.scenicSpotGrade,jdbcType=INTEGER},
+      scenic_spot_address = #{record.scenicSpotAddress,jdbcType=VARCHAR},
+      scenic_spot_tel = #{record.scenicSpotTel,jdbcType=VARCHAR},
+      scenic_spot_date = #{record.scenicSpotDate,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="scenicSpotWithBLOBs" >
+    update t_scenic_spot
+    <set >
+      <if test="scenicSpotName != null" >
+        scenic_spot_name = #{scenicSpotName,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotGrade != null" >
+        scenic_spot_grade = #{scenicSpotGrade,jdbcType=INTEGER},
+      </if>
+      <if test="scenicSpotAddress != null" >
+        scenic_spot_address = #{scenicSpotAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotTel != null" >
+        scenic_spot_tel = #{scenicSpotTel,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotDate != null" >
+        scenic_spot_date = #{scenicSpotDate,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicSpotTicketInfo != null" >
+        scenic_spot_ticket_info = #{scenicSpotTicketInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="scenicSpotInfo != null" >
+        scenic_spot_info = #{scenicSpotInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where scenic_spot_id = #{scenicSpotId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="scenicSpotWithBLOBs" >
+    update t_scenic_spot
+    set scenic_spot_name = #{scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_grade = #{scenicSpotGrade,jdbcType=INTEGER},
+      scenic_spot_address = #{scenicSpotAddress,jdbcType=VARCHAR},
+      scenic_spot_tel = #{scenicSpotTel,jdbcType=VARCHAR},
+      scenic_spot_date = #{scenicSpotDate,jdbcType=VARCHAR},
+      scenic_spot_ticket_info = #{scenicSpotTicketInfo,jdbcType=LONGVARCHAR},
+      scenic_spot_info = #{scenicSpotInfo,jdbcType=LONGVARCHAR}
+    where scenic_spot_id = #{scenicSpotId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="scenicSpot" >
+    update t_scenic_spot
+    set scenic_spot_name = #{scenicSpotName,jdbcType=VARCHAR},
+      scenic_spot_grade = #{scenicSpotGrade,jdbcType=INTEGER},
+      scenic_spot_address = #{scenicSpotAddress,jdbcType=VARCHAR},
+      scenic_spot_tel = #{scenicSpotTel,jdbcType=VARCHAR},
+      scenic_spot_date = #{scenicSpotDate,jdbcType=VARCHAR}
+    where scenic_spot_id = #{scenicSpotId,jdbcType=INTEGER}
+  </update>
+</mapper>

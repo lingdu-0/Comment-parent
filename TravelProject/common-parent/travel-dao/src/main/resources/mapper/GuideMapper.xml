@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wb.travel.dao.GuideMapper" >
+  <resultMap id="BaseResultMap" type="guide" >
+    <id column="guide_id" property="guideId" jdbcType="INTEGER" />
+    <result column="guide_name" property="guideName" jdbcType="VARCHAR" />
+    <result column="guide_sex" property="guideSex" jdbcType="INTEGER" />
+    <result column="guide_brithday" property="guideBrithday" jdbcType="DATE" />
+    <result column="guide_address" property="guideAddress" jdbcType="VARCHAR" />
+    <result column="guide_city" property="guideCity" jdbcType="VARCHAR" />
+    <result column="guide_year" property="guideYear" jdbcType="DOUBLE" />
+    <result column="guide_identity" property="guideIdentity" jdbcType="INTEGER" />
+    <result column="guide_isCar" property="guideIscar" jdbcType="INTEGER" />
+    <result column="guide_tel" property="guideTel" jdbcType="VARCHAR" />
+    <result column="guide_qq" property="guideQq" jdbcType="VARCHAR" />
+    <result column="guide_weixin" property="guideWeixin" jdbcType="VARCHAR" />
+    <result column="guide_emil" property="guideEmil" jdbcType="VARCHAR" />
+    <result column="guide_url" property="guideUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    guide_id, guide_name, guide_sex, guide_brithday, guide_address, guide_city, guide_year, 
+    guide_identity, guide_isCar, guide_tel, guide_qq, guide_weixin, guide_emil, guide_url
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="guideExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_guide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_guide
+    where guide_id = #{guideId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_guide
+    where guide_id = #{guideId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="guideExample" >
+    delete from t_guide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="guide" >
+    insert into t_guide (guide_id, guide_name, guide_sex, 
+      guide_brithday, guide_address, guide_city, 
+      guide_year, guide_identity, guide_isCar, 
+      guide_tel, guide_qq, guide_weixin, 
+      guide_emil, guide_url)
+    values (#{guideId,jdbcType=INTEGER}, #{guideName,jdbcType=VARCHAR}, #{guideSex,jdbcType=INTEGER}, 
+      #{guideBrithday,jdbcType=DATE}, #{guideAddress,jdbcType=VARCHAR}, #{guideCity,jdbcType=VARCHAR}, 
+      #{guideYear,jdbcType=DOUBLE}, #{guideIdentity,jdbcType=INTEGER}, #{guideIscar,jdbcType=INTEGER}, 
+      #{guideTel,jdbcType=VARCHAR}, #{guideQq,jdbcType=VARCHAR}, #{guideWeixin,jdbcType=VARCHAR}, 
+      #{guideEmil,jdbcType=VARCHAR}, #{guideUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="guide" >
+    insert into t_guide
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="guideId != null" >
+        guide_id,
+      </if>
+      <if test="guideName != null" >
+        guide_name,
+      </if>
+      <if test="guideSex != null" >
+        guide_sex,
+      </if>
+      <if test="guideBrithday != null" >
+        guide_brithday,
+      </if>
+      <if test="guideAddress != null" >
+        guide_address,
+      </if>
+      <if test="guideCity != null" >
+        guide_city,
+      </if>
+      <if test="guideYear != null" >
+        guide_year,
+      </if>
+      <if test="guideIdentity != null" >
+        guide_identity,
+      </if>
+      <if test="guideIscar != null" >
+        guide_isCar,
+      </if>
+      <if test="guideTel != null" >
+        guide_tel,
+      </if>
+      <if test="guideQq != null" >
+        guide_qq,
+      </if>
+      <if test="guideWeixin != null" >
+        guide_weixin,
+      </if>
+      <if test="guideEmil != null" >
+        guide_emil,
+      </if>
+      <if test="guideUrl != null" >
+        guide_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="guideId != null" >
+        #{guideId,jdbcType=INTEGER},
+      </if>
+      <if test="guideName != null" >
+        #{guideName,jdbcType=VARCHAR},
+      </if>
+      <if test="guideSex != null" >
+        #{guideSex,jdbcType=INTEGER},
+      </if>
+      <if test="guideBrithday != null" >
+        #{guideBrithday,jdbcType=DATE},
+      </if>
+      <if test="guideAddress != null" >
+        #{guideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="guideCity != null" >
+        #{guideCity,jdbcType=VARCHAR},
+      </if>
+      <if test="guideYear != null" >
+        #{guideYear,jdbcType=DOUBLE},
+      </if>
+      <if test="guideIdentity != null" >
+        #{guideIdentity,jdbcType=INTEGER},
+      </if>
+      <if test="guideIscar != null" >
+        #{guideIscar,jdbcType=INTEGER},
+      </if>
+      <if test="guideTel != null" >
+        #{guideTel,jdbcType=VARCHAR},
+      </if>
+      <if test="guideQq != null" >
+        #{guideQq,jdbcType=VARCHAR},
+      </if>
+      <if test="guideWeixin != null" >
+        #{guideWeixin,jdbcType=VARCHAR},
+      </if>
+      <if test="guideEmil != null" >
+        #{guideEmil,jdbcType=VARCHAR},
+      </if>
+      <if test="guideUrl != null" >
+        #{guideUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="guideExample" resultType="java.lang.Integer" >
+    select count(*) from t_guide
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_guide
+    <set >
+      <if test="record.guideId != null" >
+        guide_id = #{record.guideId,jdbcType=INTEGER},
+      </if>
+      <if test="record.guideName != null" >
+        guide_name = #{record.guideName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideSex != null" >
+        guide_sex = #{record.guideSex,jdbcType=INTEGER},
+      </if>
+      <if test="record.guideBrithday != null" >
+        guide_brithday = #{record.guideBrithday,jdbcType=DATE},
+      </if>
+      <if test="record.guideAddress != null" >
+        guide_address = #{record.guideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideCity != null" >
+        guide_city = #{record.guideCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideYear != null" >
+        guide_year = #{record.guideYear,jdbcType=DOUBLE},
+      </if>
+      <if test="record.guideIdentity != null" >
+        guide_identity = #{record.guideIdentity,jdbcType=INTEGER},
+      </if>
+      <if test="record.guideIscar != null" >
+        guide_isCar = #{record.guideIscar,jdbcType=INTEGER},
+      </if>
+      <if test="record.guideTel != null" >
+        guide_tel = #{record.guideTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideQq != null" >
+        guide_qq = #{record.guideQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideWeixin != null" >
+        guide_weixin = #{record.guideWeixin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideEmil != null" >
+        guide_emil = #{record.guideEmil,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideUrl != null" >
+        guide_url = #{record.guideUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_guide
+    set guide_id = #{record.guideId,jdbcType=INTEGER},
+      guide_name = #{record.guideName,jdbcType=VARCHAR},
+      guide_sex = #{record.guideSex,jdbcType=INTEGER},
+      guide_brithday = #{record.guideBrithday,jdbcType=DATE},
+      guide_address = #{record.guideAddress,jdbcType=VARCHAR},
+      guide_city = #{record.guideCity,jdbcType=VARCHAR},
+      guide_year = #{record.guideYear,jdbcType=DOUBLE},
+      guide_identity = #{record.guideIdentity,jdbcType=INTEGER},
+      guide_isCar = #{record.guideIscar,jdbcType=INTEGER},
+      guide_tel = #{record.guideTel,jdbcType=VARCHAR},
+      guide_qq = #{record.guideQq,jdbcType=VARCHAR},
+      guide_weixin = #{record.guideWeixin,jdbcType=VARCHAR},
+      guide_emil = #{record.guideEmil,jdbcType=VARCHAR},
+      guide_url = #{record.guideUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="guide" >
+    update t_guide
+    <set >
+      <if test="guideName != null" >
+        guide_name = #{guideName,jdbcType=VARCHAR},
+      </if>
+      <if test="guideSex != null" >
+        guide_sex = #{guideSex,jdbcType=INTEGER},
+      </if>
+      <if test="guideBrithday != null" >
+        guide_brithday = #{guideBrithday,jdbcType=DATE},
+      </if>
+      <if test="guideAddress != null" >
+        guide_address = #{guideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="guideCity != null" >
+        guide_city = #{guideCity,jdbcType=VARCHAR},
+      </if>
+      <if test="guideYear != null" >
+        guide_year = #{guideYear,jdbcType=DOUBLE},
+      </if>
+      <if test="guideIdentity != null" >
+        guide_identity = #{guideIdentity,jdbcType=INTEGER},
+      </if>
+      <if test="guideIscar != null" >
+        guide_isCar = #{guideIscar,jdbcType=INTEGER},
+      </if>
+      <if test="guideTel != null" >
+        guide_tel = #{guideTel,jdbcType=VARCHAR},
+      </if>
+      <if test="guideQq != null" >
+        guide_qq = #{guideQq,jdbcType=VARCHAR},
+      </if>
+      <if test="guideWeixin != null" >
+        guide_weixin = #{guideWeixin,jdbcType=VARCHAR},
+      </if>
+      <if test="guideEmil != null" >
+        guide_emil = #{guideEmil,jdbcType=VARCHAR},
+      </if>
+      <if test="guideUrl != null" >
+        guide_url = #{guideUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where guide_id = #{guideId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="guide" >
+    update t_guide
+    set guide_name = #{guideName,jdbcType=VARCHAR},
+      guide_sex = #{guideSex,jdbcType=INTEGER},
+      guide_brithday = #{guideBrithday,jdbcType=DATE},
+      guide_address = #{guideAddress,jdbcType=VARCHAR},
+      guide_city = #{guideCity,jdbcType=VARCHAR},
+      guide_year = #{guideYear,jdbcType=DOUBLE},
+      guide_identity = #{guideIdentity,jdbcType=INTEGER},
+      guide_isCar = #{guideIscar,jdbcType=INTEGER},
+      guide_tel = #{guideTel,jdbcType=VARCHAR},
+      guide_qq = #{guideQq,jdbcType=VARCHAR},
+      guide_weixin = #{guideWeixin,jdbcType=VARCHAR},
+      guide_emil = #{guideEmil,jdbcType=VARCHAR},
+      guide_url = #{guideUrl,jdbcType=VARCHAR}
+    where guide_id = #{guideId,jdbcType=INTEGER}
+  </update>
+</mapper>

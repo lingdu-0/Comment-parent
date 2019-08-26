@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wb.travel.dao.StrategyMapper" >
+  <resultMap id="BaseResultMap" type="strategy" >
+    <id column="strategy_id" property="strategyId" jdbcType="INTEGER" />
+    <result column="strategy_title" property="strategyTitle" jdbcType="VARCHAR" />
+    <result column="strategy_type" property="strategyType" jdbcType="VARCHAR" />
+    <result column="strategy_address" property="strategyAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="strategy" extends="BaseResultMap" >
+    <result column="strategy_text" property="strategyText" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    strategy_id, strategy_title, strategy_type, strategy_address
+  </sql>
+  <sql id="Blob_Column_List" >
+    strategy_text
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="strategyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_strategy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="strategyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_strategy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_strategy
+    where strategy_id = #{strategyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_strategy
+    where strategy_id = #{strategyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="strategyExample" >
+    delete from t_strategy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="strategy" >
+    insert into t_strategy (strategy_id, strategy_title, strategy_type, 
+      strategy_address, strategy_text)
+    values (#{strategyId,jdbcType=INTEGER}, #{strategyTitle,jdbcType=VARCHAR}, #{strategyType,jdbcType=VARCHAR}, 
+      #{strategyAddress,jdbcType=VARCHAR}, #{strategyText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="strategy" >
+    insert into t_strategy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="strategyId != null" >
+        strategy_id,
+      </if>
+      <if test="strategyTitle != null" >
+        strategy_title,
+      </if>
+      <if test="strategyType != null" >
+        strategy_type,
+      </if>
+      <if test="strategyAddress != null" >
+        strategy_address,
+      </if>
+      <if test="strategyText != null" >
+        strategy_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="strategyId != null" >
+        #{strategyId,jdbcType=INTEGER},
+      </if>
+      <if test="strategyTitle != null" >
+        #{strategyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyType != null" >
+        #{strategyType,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyAddress != null" >
+        #{strategyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyText != null" >
+        #{strategyText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="strategyExample" resultType="java.lang.Integer" >
+    select count(*) from t_strategy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_strategy
+    <set >
+      <if test="record.strategyId != null" >
+        strategy_id = #{record.strategyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.strategyTitle != null" >
+        strategy_title = #{record.strategyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strategyType != null" >
+        strategy_type = #{record.strategyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strategyAddress != null" >
+        strategy_address = #{record.strategyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strategyText != null" >
+        strategy_text = #{record.strategyText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_strategy
+    set strategy_id = #{record.strategyId,jdbcType=INTEGER},
+      strategy_title = #{record.strategyTitle,jdbcType=VARCHAR},
+      strategy_type = #{record.strategyType,jdbcType=VARCHAR},
+      strategy_address = #{record.strategyAddress,jdbcType=VARCHAR},
+      strategy_text = #{record.strategyText,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_strategy
+    set strategy_id = #{record.strategyId,jdbcType=INTEGER},
+      strategy_title = #{record.strategyTitle,jdbcType=VARCHAR},
+      strategy_type = #{record.strategyType,jdbcType=VARCHAR},
+      strategy_address = #{record.strategyAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="strategy" >
+    update t_strategy
+    <set >
+      <if test="strategyTitle != null" >
+        strategy_title = #{strategyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyType != null" >
+        strategy_type = #{strategyType,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyAddress != null" >
+        strategy_address = #{strategyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyText != null" >
+        strategy_text = #{strategyText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where strategy_id = #{strategyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="strategy" >
+    update t_strategy
+    set strategy_title = #{strategyTitle,jdbcType=VARCHAR},
+      strategy_type = #{strategyType,jdbcType=VARCHAR},
+      strategy_address = #{strategyAddress,jdbcType=VARCHAR},
+      strategy_text = #{strategyText,jdbcType=LONGVARCHAR}
+    where strategy_id = #{strategyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="strategy" >
+    update t_strategy
+    set strategy_title = #{strategyTitle,jdbcType=VARCHAR},
+      strategy_type = #{strategyType,jdbcType=VARCHAR},
+      strategy_address = #{strategyAddress,jdbcType=VARCHAR}
+    where strategy_id = #{strategyId,jdbcType=INTEGER}
+  </update>
+</mapper>
